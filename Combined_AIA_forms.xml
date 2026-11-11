@@ -1,0 +1,793 @@
+<?xml version="1.0"?>
+<!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
+<pdf>
+  <head>
+    <style type="text/css">
+      table {
+        font-size: 9pt;
+        table-layout: fixed;
+      }
+      th {
+        font-weight: bold;
+        font-size: 8pt;
+        vertical-align: middle;
+        padding: 5px 6px 3px;
+        background-color: #e3e3e3;
+        color: #333333;
+      }
+      td {
+        padding: 4px 6px;
+      }
+      td p { align: left; }
+      b {
+        font-weight: bold;
+        color: #333333;
+      }
+      table.header td {
+        padding: 0px;
+        font-size: 10pt;
+      }
+      table.footer td {
+        padding: 0px;
+        font-size: 8pt;
+      }
+      table.itemtable th {
+        padding-bottom: 11px;
+        padding-top: 11px;
+      }
+      table.body td {
+        padding-top: 2px;
+      }
+      table.total {
+        page-break-inside: avoid;
+      }
+      tr.totalrow {
+        background-color: #e3e3e3;
+        line-height: 200%;
+      }
+      td.totalboxtop {
+        font-size: 12pt;
+        background-color: #e3e3e3;
+      }
+      td.addressheader {
+        font-size: 8pt;
+        padding-top: 6px;
+        padding-bottom: 2px;
+      }
+      td.address {
+        padding-top: 0px;
+      }
+      td.totalboxmid {
+        font-size: 28pt;
+        padding-top: 20px;
+        background-color: #e3e3e3;
+      }
+      td.totalboxbot {
+        background-color: #e3e3e3;
+        font-weight: bold;
+      }
+      span.title {
+        font-size: 28pt;
+      }
+      span.number {
+        font-size: 16pt;
+      }
+      span.itemname {
+        font-weight: bold;
+        line-height: 150%;
+      }
+      hr {
+        width: 100%;
+        color: #d3d3d3;
+        background-color: #d3d3d3;
+        height: 1px;
+      }
+      .fixed-width-space {
+        white-space: pre;
+      }
+    </style>
+  </head>
+
+  <body padding="0.25in 0.25in 0.25in 0.25in" size="Letter-LANDSCAPE">
+    <!-- Application and Certificate for Payment -->
+        <div style="font-size: 9px;">
+            <table>
+                <tr>
+                    <td style="font-size: 20px;"><b><i>
+                        <#if .locale=="fr_CA">
+                            Demande et Certificat de Paiement
+                        <#else>
+                            Application and Certificate for Payment
+                        </#if>
+                    </i></b></td>
+                </tr>
+            </table>
+
+            <table border-top="2px solid black;">
+                <tr>
+                    <td style="width: 480px; height: 89px; font-size: 9px;">
+                        <table align="left" style="width: 487px;">
+                            <tr>
+                                <td style="width: 50%;"><b>
+                                        <#if .locale=="fr_CA">
+                                                À (PROPRIÉTAIRE):
+                                                <#else>
+                                                    TO OWNER:
+                                        </#if>
+                                    </b><br />{{ TOOWNER }}</td>
+                                <td style="width: 50%;"><b>
+                                    <#if .locale=="fr_CA">
+                                        PROJET:
+                                    <#else>
+                                        PROJECT:
+                                    </#if>
+                                </b><br />{{ PROJECT }}{{ CONTRACTADDRESS }}</td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%;"><b>
+                                    <#if .locale=="fr_CA">
+                                        DE (CONTRACTEUR):
+                                    <#else>
+                                        FROM CONTRACTOR:
+                                    </#if>
+                                </b><br />{{ FROMCONTRACTOR }}</td>
+                                <td style="width: 50%;"><b>
+                                    <#if .locale=="fr_CA">
+                                        VIA ARCHITECTE:
+                                    <#else>
+                                        VIA ARCHITECT:
+                                    </#if>
+                                </b><br />{{ VIAARCHITECT }}<br /><br />
+                               <b>INVOICE #:</b> {{ tranid }}</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="width: 396px; height: 89px; font-size: 9px;">
+                        <table style="width:100%;">
+                            <tr>
+                                <td align="right" style="width: 45%;">
+                                    <#if .locale=="fr_CA">
+                                        N° D'APPLICATION:
+                                    <#else>
+                                        APPLICATION NO:
+                                    </#if>
+                                </td>
+                                <td align="left" style="width: 55%">{{ applicationNumber }}</td>
+                            </tr>
+                            <tr>
+                                <td align="right" style="width: 45%;">
+                                    <#if .locale=="fr_CA">
+                                        PÉRIODE SE TERMINANT LE:
+                                    <#else>
+                                        PERIOD TO:
+                                    </#if>
+                                </td>
+                                <td align="left" style="width: 55%">{{ periodTo }}</td>
+                            </tr>
+                            <tr>
+                                <td align="right" style="width: 45%;">
+                                    <#if .locale=="fr_CA">
+                                        CONTRAT POUR:
+                                    <#else>
+                                        CONTRACT FOR:
+                                    </#if>
+                                </td>
+                                <td align="left" style="width: 55%;">{{ contractFor }}</td>
+                            </tr>
+                            <tr>
+                                <td align="right" style="width: 45%;">
+                                    <#if .locale=="fr_CA">
+                                        DATE DU CONTRAT:
+                                    <#else>
+                                        CONTRACT DATE:
+                                    </#if>
+                                </td>
+                                <td align="left" style="width: 55%;">{{ contractDate }}</td>
+                            </tr>
+                            <tr>
+                                <td align="right" style="width: 45%;">
+                                    <#if .locale=="fr_CA">
+                                        N° DE PROJET:
+                                    <#else>
+                                        PROJECT NOS:
+                                    </#if>
+                                </td>
+                                <td align="left" style="width: 55%;">{{ projectNumber }}</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td style="width: 136px; height: 89px; font-size: 9px;">
+                        <table style="width: 100%;">
+                            <tr>
+                                <td align="right" style="width: 100%; font-weight: bold; text-decoration: underline;">
+                                    <#if .locale=="fr_CA">
+                                        Distribué À:
+                                    <#else>
+                                        Distribution to:
+                                    </#if>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td align="right" style="width: 100%;"><input id="owner" name="owner"
+                                        style="float:right" type="checkbox" value="owner" /> <label
+                                        for="owner">
+                                        <#if .locale=="fr_CA">
+                                            Propriétaire
+                                        <#else>
+                                            Owner
+                                        </#if>
+                                    </label></td>
+                            </tr>
+                            <tr>
+                                <td align="right" style="width: 100%;"><input id="architect" name="architect"
+                                        style="float:right" type="checkbox" value="architect" /> <label
+                                        for="architect">
+                                        <#if .locale=="fr_CA">
+                                            Architecte
+                                        <#else>
+                                            Architect
+                                        </#if>
+                                    </label></td>
+                            </tr>
+                            <tr>
+                                <td align="right" style="width: 100%;"><input id="contractor" name="contractor"
+                                        style="float:right" type="checkbox" value="contractor" /> <label
+                                        for="contractor">
+                                        <#if .locale=="fr_CA">
+                                            Contracteur
+                                        <#else>
+                                            Contractor
+                                        </#if>
+                                    </label></td>
+                            </tr>
+                            <tr>
+                                <td align="right" style="width: 100%;"><input id="field" name="field"
+                                        style="float:right" type="checkbox" value="field" /> <label
+                                        for="field">
+                                        <#if .locale=="fr_CA">
+                                            Chantier
+                                        <#else>
+                                            Field
+                                        </#if>
+                                    </label></td>
+                            </tr>
+                            <tr>
+                                <td align="right" style="width: 100%;"><input id="other" name="other"
+                                        style="float:right" type="checkbox" value="other" /> <label
+                                        for="other">
+                                        <#if .locale=="fr_CA">
+                                            Autre
+                                        <#else>
+                                            Other
+                                        </#if>
+                                    </label></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+            <table padding-top="1px" margin-top="1px" width="100%" border-top="2px solid black;"
+                style="font-size: 10px;">
+                <tr>
+                    <td width="49%" style="font-size: 14px;"><b>
+                        <#if .locale=="fr_CA">
+                            DEMANDE DE PAIEMENT DU CONTRACTEUR
+                        <#else>
+                            CONTRACTOR&#39;S APPLICATION FOR PAYMENT
+                        </#if>
+                    </b></td>
+                    <td width="2%"></td>
+                    <td rowspan="4" width="49%" style="font-size: 9px;">
+                        <#if .locale=="fr_CA">
+                            Le Contracteur soussigné certifie que les travaux ont été exécutés conformément aux documents contractuels, que toutes les sommes dues pour des travaux précédents ont été payées, et que le paiement courant est maintenant exigible.
+                        <#else>
+                            The undersigned Contractor certifies that to the best of the Contractor&#39;s knowledge, information, and belief the Work covered by this Application for Payment has been completed in accordance with the Contract Documents, that all amounts have been paid by the Contractor for Work for which previous Certifications for Payment were issued and payments received from the Owner, and that current payment shown herein is now due.
+                        </#if>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="49%" padding-top="1px" margin-top="1px" style="font-size: 9px;">
+                        <#if .locale=="fr_CA">
+                            La demande de paiement est présentée ci-dessous, conformément au Contrat.
+                        <#else>
+                            Application is made for payment as shown below, in connection with the Contract.
+                        </#if>
+                    </td>
+                    <td width="2%"></td>
+                </tr>
+                <tr>
+                    <td width="49%" padding-top="1px" margin-top="1px" style="font-size: 9px;">
+                        <#if .locale=="fr_CA">
+                            La feuille de continuation de la demande de paiement est jointe.
+                        <#else>
+                            Application for payment detail continuation sheet is attached.
+                        </#if>
+                    </td>
+                    <td width="2%"></td>
+                </tr>
+                <tr>
+                    <td width="49%" padding-top="1px" margin-top="1px">
+                        <#if .locale=="fr_CA">
+                            <b>1. MONTANT INITIAL DU CONTRAT</b> ............................................................................. 
+                        <#else>
+                            <b>1. ORIGINAL CONTRACT SUM</b> ....................................................................................... 
+                        </#if>
+                        $ {{ OCS }}
+                    </td>
+                    <td width="2%"></td>
+                </tr>
+                <tr>
+                    <td width="49%" padding-top="1px" margin-top="1px">
+                        <#if .locale=="fr_CA">
+                            <b>2. VARIATION NETTE PAR AVENANTS</b> .......................................................................... 
+                        <#else>
+                            <b>2. NET CHANGE BY CHANGE ORDERS</b> ........................................................................ 
+                        </#if>
+                        $ {{ NCBCO }}</td>
+                    <td width="2%"></td>
+                    <td width="49%"><b>
+                        <#if .locale=="fr_CA">
+                            CONTRACTEUR:
+                        <#else>
+                            CONTRACTOR:
+                        </#if>
+                        {{ CONTRACTOR }}</b></td>
+                </tr>
+                <tr>
+                    <td width="49%" padding-top="1px" margin-top="1px"><b>
+                        <#if .locale=="fr_CA">
+                            3. MONTANT DU CONTRAT À JOUR
+                        <#else>
+                            3. CONTRACT SUM TO DATE
+                        </#if>
+                    </b><span style="font-size: 9px;">
+                        <#if .locale=="fr_CA">
+                            (Lignes 1 + 2) ............................................................... 
+                        <#else>
+                            (Line 1 &amp; Line 2) ....................................................................... 
+                        </#if>
+                    </span>$ {{ CSTD }}</td>
+                    <td width="2%"></td>
+                    <td width="49%" class="fixed-width-space" style="font-size: 9px;">
+                        <#if .locale=="fr_CA">Par:<#else>By:</#if> <input type="text" name="employer" value='{{ BY }}' style="border: none; border-bottom: 1px solid #000; width: 100px; display: inline;" /> <span width="200px" padding-left="200px">&nbsp;</span><#if .locale=="fr_CA">Date:<#else>Date:</#if> <input type="text" name="date" value='{{ DATE }}' style="border: none; border-bottom: 1px solid #000; width: 80px; display: inline;" />
+                    </td>
+                </tr>
+                <tr>
+                    <td width="49%" padding-top="1px" margin-top="1px"><b>
+                        <#if .locale=="fr_CA">
+                            4. TOTAL COMPLÉTÉ À JOUR
+                        <#else>
+                            4. TOTAL COMPLETED AND STORED TO DATE
+                        </#if>
+                    </b><span style="font-size: 9px;">
+                        <#if .locale=="fr_CA">
+                            (Colonne G sur le Détail) ......................................................... 
+                        <#else>
+                            (Column G on Detail) .......................... 
+                        </#if>
+                    </span>$ {{ TCASTD }}</td>
+                    <td width="2%"></td>
+                    <td width="49%" style="font-size: 9px;">
+                        <#if .locale=="fr_CA">Province:<#else>State of:</#if> <input type="text" name="stateof" value='{{ STATEOF }}' style="border: none; border-bottom: 1px solid #000; width: 100px; display: inline;" />
+                    </td>
+                </tr>
+                <tr>
+                    <td width="49%" padding-top="1px" margin-top="1px"><b>
+                        <#if .locale=="fr_CA">
+                            5. RETENUE DE GARANTIE:
+                        <#else>
+                            5. RETAINAGE:
+                        </#if>
+                    </b></td>
+                    <td width="2%"></td>
+                    <td width="49%" style="font-size: 9px;">
+                        <#if .locale=="fr_CA">Comté:<#else>County of:</#if> <input type="text" name="countryof" value='{{ COUNTYOF }}' style="border: none; border-bottom: 1px solid #000; width: 100px; display: inline;" />
+                    </td>
+                </tr>
+                <tr>
+                    <td width="49%" padding-top="1px" padding-left="10px" margin-top="1px"><b>a. </b><span
+                            style="font-size: 9px;">{{ POCW }} 
+                        <#if .locale=="fr_CA">
+                            % des travaux complétés
+                        <#else>
+                            % of Completed Work
+                        </#if>
+                    </span></td>
+                    <td width="2%"></td>
+                    <td width="49%" style="font-size: 9px;">
+                        <#if .locale=="fr_CA">
+                            Déclaré sous serment devant
+                        <#else>
+                            Subscribed and sworn to before
+                        </#if>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="49%" padding-top="1px" padding-left="20px" margin-top="1px"><span
+                            style="font-size: 9px;"><i>
+                        <#if .locale=="fr_CA">
+                            (Colonnes D + E sur le Détail)
+                        <#else>
+                            (Columns D + E on Detail)
+                        </#if>
+                    </i></span><span width="200px" padding-left="199px">&nbsp;</span><span style="font-size: 9px;">$ {{ CW }}</span></td>
+                    <td width="2%"></td>
+                    <td width="49%" style="font-size: 9px;">
+                        <#if .locale=="fr_CA">moi ce:<#else>me this:</#if> <input type="text" name="dayof" value='{{ DAY OF }}' style="border: none; border-bottom: 1px solid #000; width: 100px; display: inline;" /><span width="130px" padding-left="129px">&nbsp;</span><#if .locale=="fr_CA">jour de:<#else>day of:</#if> <input type="text" name="monthyear" value='{{ MONTH }} {{ YEAR }}' style="border: none; border-bottom: 1px solid #000; width: 100px; display: inline;" />
+                    </td>
+                </tr>
+                <tr>
+                    <td width="49%" padding-top="1px" padding-left="10px" margin-top="1px"><b>b. </b><span
+                            style="font-size: 9px;">{{ POSM }} 
+                        <#if .locale=="fr_CA">
+                            % des matériaux stockés
+                        <#else>
+                            % of Stored Material
+                        </#if>
+                    </span></td>
+                    <td width="2%"></td>
+                    <td width="49%" style="font-size: 9px;">
+                        <#if .locale=="fr_CA">Notaire:<#else>Notary Public:</#if> <input type="text" name="notary" value='{{ NOTARYPUBLIC }}' style="border: none; border-bottom: 1px solid #000; width: 100px; display: inline;" />
+                    </td>
+                </tr>
+                <tr>
+                    <td width="49%" padding-top="1px" padding-left="20px" margin-top="1px"><span
+                            style="font-size: 9px;"><i>
+                        <#if .locale=="fr_CA">
+                            (Colonne F sur le Détail)
+                        <#else>
+                            (Columns F on Detail)
+                        </#if>
+                    </i></span><span width="220px" padding-left="219px">&nbsp;</span><span style="font-size: 9px;">$ {{ SM }}</span></td>
+                    <td width="2%"></td>
+                    <td width="49%" style="font-size: 9px;">
+                        <#if .locale=="fr_CA">Expiration de ma commission:<#else>My Commission Expires:</#if> <input type="text" name="mce" value='{{ MCE }}' style="border: none; border-bottom: 1px solid #000; width: 100px; display: inline;" />
+                    </td>
+                </tr>
+                <tr>
+                    <td width="49%" padding-top="1px" padding-left="10px" margin-top="1px" style="font-size: 9px;">
+                        <#if .locale=="fr_CA">
+                            Retenue totale <i>(Lignes 5a + 5b, ou Total dans la Colonne I du Détail)</i>
+                        <#else>
+                            Total Retainage <i>(Lines 5a + 5b, or Total in Column I of Detail)</i>
+                        </#if>
+                    </td>
+                    <td width="2%"></td>
+                    <td width="49%" border-bottom="2px" style="font-size: 9px;">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td width="49%" padding-top="1px" margin-top="1px">
+                        <#if .locale=="fr_CA">
+                            <b>6. TOTAL COMPLÉTÉ MOINS RETENUE</b> ...................................................................... 
+                        <#else>
+                            <b>6. TOTAL EARNED LESS RETAINAGE</b> ............................................................................ 
+                        </#if>
+                    $ {{ TELR }}</td>
+                    <td width="2%"></td>
+                    <td width="49%" style="font-size: 14px;"><b>
+                        <#if .locale=="fr_CA">
+                            CERTIFICAT DE PAIEMENT
+                        <#else>
+                            CERTIFICATE FOR PAYMENT
+                        </#if>
+                    </b></td>
+                </tr>
+                <tr>
+                    <td width="49%" padding-top="1px" padding-left="20px" margin-top="1px" style="font-size: 9px;">
+                        <i>
+                            <#if .locale=="fr_CA">
+                                (Ligne 4 - Ligne 5 Total)
+                            <#else>
+                                (Line 4 minus Line 5 Total)
+                            </#if>
+                        </i>
+                    </td>
+                    <td width="2%"></td>
+                    <td width="49%" rowspan="4" style="font-size: 9px;">
+                        <#if .locale=="fr_CA">
+                            Conformément aux documents contractuels, l'Architecte certifie au Propriétaire que les travaux ont progressé comme indiqué, que la qualité est conforme aux documents contractuels, et que le Contracteur a droit au paiement du MONTANT CERTIFIÉ.
+                        <#else>
+                            In accordance with the Contract Documents, based on on-site observations and the data comprising this application, the Architect certifies to the Owner that to the best of the Architect&#39;s knowledge, information, and belief the Work has progressed as indicated, the quality of the Work is in accordance with the Contract Documents, and the Contractor is entitled to payment of the AMOUNT CERTIFIED.
+                        </#if>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="49%" padding-top="1px" margin-top="1px">
+                        <#if .locale=="fr_CA">
+                            <b>7. MOINS PAIEMENTS PRÉCÉDENTS</b> ............................................................................ 
+                        <#else>
+                            <b>7. LESS PREVIOUS CERTIFICATES FOR PAYMENT</b> ................................................... 
+                        </#if>
+                    $ {{ LPCFP }}</td>
+                    <td width="2%"></td>
+                </tr>
+                <tr>
+                    <td width="49%" padding-top="1px" padding-left="20px" margin-top="1px" style="font-size: 9px;">
+                        <i>
+                            <#if .locale=="fr_CA">
+                                (Ligne 6 du certificat précédent)
+                            <#else>
+                                (Line 6 from prior Certificate)
+                            </#if>
+                        </i>
+                    </td>
+                    <td width="2%"></td>
+                </tr>
+                <tr>
+                    <td width="49%" padding-top="1px" margin-top="1px">
+                        <#if .locale=="fr_CA">
+                            <b>8. PAIEMENT COURANT DÛ</b> ............................................................................................. 
+                        <#else>
+                            <b>8. CURRENT PAYMENT DUE</b> ............................................................................................. 
+                        </#if>
+                    $ {{ CPD }}</td>
+                    <td width="2%"></td>
+                </tr>
+                <tr>
+                    <td width="49%" padding-top="1px" margin-top="1px"><b>
+                        <#if .locale=="fr_CA">
+                            9. SOLDE À TERMINER, RETENUE INCLUSE
+                        <#else>
+                            9. BALANCE TO FINISH, INCLUDING RETAINAGE
+                        </#if>
+                    </b></td>
+                    <td width="2%"></td>
+                    <td width="49%">
+                        <#if .locale=="fr_CA">
+                            <b>MONTANT CERTIFIÉ</b> .......................................................................................................... 
+                        <#else>
+                            <b>AMOUNT CERTIFIED</b> .......................................................................................................... 
+                        </#if>
+                    $ {{ AC }}</td>
+                </tr>
+                <tr>
+                    <td width="49%" rowspan="2" padding-top="1px" padding-left="20px" margin-top="1px"><span
+                            style="font-size: 9px;"><i>
+                        <#if .locale=="fr_CA">
+                            (Ligne 3 − Ligne 6)
+                        <#else>
+                            (Line 3 minus Line 6)
+                        </#if>
+                    </i></span><span width="220px" padding-left="219px">&nbsp;</span><span style="font-size: 9px;">$ {{ BTFIR }}</span></td>
+                    <td width="2%"></td>
+                    <td width="49%" style="font-size: 9px;"><i>
+                        <#if .locale=="fr_CA">
+                            (Joindre une explication si le montant certifié diffère du montant demandé. Parapher tous les chiffres modifiés.)<br />
+                        <#else>
+                            (Attach explanation if amount certified differs from the amount applied. Initial all figures on this Application and on the
+                        </#if>
+                    </i></td>
+                </tr>
+                <tr>
+                    <td width="2%"></td>
+                    <td width="49%" style="font-size: 9px;"><i>
+                        <#if .locale=="fr_CA">
+                            
+                        <#else>
+                            Continuation sheet that are changed to conform with the amount certified.)
+                        </#if>
+                    </i></td>
+                </tr>
+                <tr>
+                    <td rowspan="3" width="49%" padding-top="1px" margin-top="1px">
+                        <table width="100%">
+                            <tr>
+                                <th width="55%" border="1">
+                                    <#if .locale=="fr_CA">
+                                        RÉCAPITULATIF DES AVENANTS
+                                    <#else>
+                                        CHANGE ORDER SUMMARY
+                                    </#if>
+                                </th>
+                                <th width="20%" border-top="1" border-right="1" border-bottom="1">
+                                    <#if .locale=="fr_CA">
+                                        ADDITIONS
+                                    <#else>
+                                        ADDITIONS
+                                    </#if>
+                                </th>
+                                <th width="25%" border-top="1" border-right="1" border-bottom="1">
+                                    <#if .locale=="fr_CA">
+                                        DÉDUCTIONS
+                                    <#else>
+                                        DEDUCTIONS
+                                    </#if>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td width="55%" border-left="1" border-right="1" border-bottom="1"
+                                    style="font-size: 9px;">
+                                    <#if .locale=="fr_CA">
+                                        Total des avenants approuvés au cours des mois précédents
+                                    <#else>
+                                        Total changes approved in previous months by Owner
+                                    </#if>
+                                </td>
+                                <td width="20%" border-right="1" border-bottom="1" style="font-size: 9px;">${{ TCAa }}</td>
+                                <td width="25%" border-right="1" border-bottom="1" style="font-size: 9px;">${{ TCAd }}</td>
+                            </tr>
+                            <tr>
+                                <td width="55%" border-left="1" border-right="1" border-bottom="1"
+                                    style="font-size: 9px;">
+                                    <#if .locale=="fr_CA">
+                                        Approuvés ce mois
+                                    <#else>
+                                        Total approved this month
+                                    </#if>
+                                </td>
+                                <td width="20%" border-right="1" border-bottom="1" style="font-size: 9px;">${{ TATMa }}</td>
+                                <td width="25%" border-right="1" border-bottom="1" style="font-size: 9px;">${{ TATMd }}</td>
+                            </tr>
+                            <tr>
+                                <td width="55%" border-left="1" border-right="1" border-bottom="1" align="right"
+                                    style="font-size: 9px;">TOTAL</td>
+                                <td width="20%" border-right="1" border-bottom="1" style="font-size: 9px;">${{ TOTALa }}</td>
+                                <td width="25%" border-right="1" border-bottom="1" style="font-size: 9px;">${{ TOTALd }}</td>
+                            </tr>
+                            <tr>
+                                <td width="20%" border-left="1" border-right="1" border-bottom="1"
+                                    style="font-size: 9px;">
+                                    <#if .locale=="fr_CA">
+                                        VARIATION NETTE PAR AVENANT
+                                    <#else>
+                                        NET CHANGES by Change Order
+                                    </#if>
+                                </td>
+                                <td width="45%" border-right="1" border-bottom="1" colspan="2" style="font-size: 9px;">${{ NCBCOT }}</td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td width="2%"></td>
+                    <td width="49%"><b>
+                        <#if .locale=="fr_CA">
+                            ARCHITECTE:
+                        <#else>
+                            ARCHITECT:
+                        </#if>
+                    </b></td>
+                </tr>
+                <tr>
+                    <td width="2%"></td>
+                    <td width="49%" style="font-size: 9px;">
+                        <#if .locale=="fr_CA">
+                            Par:
+                        <#else>
+                            By:
+                        </#if>
+                        {{ ARCHITECTBY }}<span width="280px" padding-left="279px">&nbsp;</span>
+                        <#if .locale=="fr_CA">
+                            Date:
+                        <#else>
+                            Date:
+                        </#if>
+                        {{ ARCHITECTDATE }}
+                    </td>
+                </tr>
+                <tr>
+                    <td width="2%"></td>
+                    <td rowspan="3" width="49%" style="font-size: 9px;">
+                        <#if .locale=="fr_CA">
+                            Ce certificat n'est pas négociable. Le MONTANT CERTIFIÉ est payable uniquement au Contracteur désigné. L'émission, le paiement et l'acceptation du paiement sont sans préjudice des droits des parties.
+                        <#else>
+                            This Certificate is not negotiable. The AMOUNT CERTIFIED is payable only to the Contractor named herein. Issuance, payment, and acceptance of payment are without prejudice to any rights of the Owner or Contractor under this Contract.
+                        </#if>
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    <br page-break="true"/>
+
+    <!-- Continuation Sheet -->
+    <div>
+      <table style="width: 100%;" padding-bottom="12px">
+        <tr style="width: 100%; border-bottom: 3px solid black;">
+            <td style="width: 53%; font-size:16px; padding: 0px; margin: 0px;"><h3>CONTINUATION SHEET</h3></td>
+            <td align="right" style="padding: 0px; margin: 0px; width: 1%; font-size:11px; vertical-align: bottom;">&nbsp;</td>
+            <td style="padding: 0px; margin: 0px; width: 23%;">&nbsp;</td>
+            <td style="padding: 0px; margin: 0px; width: 23%; vertical-align: bottom;" align = "right"></td>
+        </tr>
+        <tr style="width: 100%; padding: 0px; margin: 0px;">
+            <td style="padding: 0px; margin: 0px; width: 53%; font-size:11px;">APPLICATION AND CERTIFICATION FOR PAYMENT, containing</td>
+            <td align="right" style="padding: 0px; margin: 0px; width: 1%; font-size:11px;">&nbsp;</td>
+            <td align="right" style="padding: 0px 15px 0px 0px; margin: 0px; width: 23%; font-size:11px;">PROJECT &amp; APPLICATION NO:</td>
+            <td style="padding: 0px; margin: 0px; width: 23%; font-size:11px;">{{ applicationNumber }}</td>
+        </tr>
+        <tr style="width: 100%; padding: 0px; margin: 0px;">
+            <td style="padding: 0px; margin: 0px; width: 53%; font-size:11px;">Contractor's signed certification is attached.</td>
+            <td align="right" style="padding: 0px; margin: 0px; width: 1%; font-size:11px;">&nbsp;</td>
+            <td align="right" style="padding: 0px 15px 0px 0px; margin: 0px; width: 23%; font-size:11px;">APPLICATION DATE:</td>
+            <td style="padding: 0px; margin: 0px; width: 23%; font-size:11px;">{{ applicationDate }}</td>
+        </tr>
+        <tr style="width: 100%; padding: 0px; margin: 0px;">
+            <td style="padding: 0px; margin: 0px; width: 53%; font-size:11px;">In tabulations below, amounts are stated to the nearest dollar.</td>
+            <td align="right" style="padding: 0px; margin: 0px; width: 1%; font-size:11px;">&nbsp;</td>
+            <td align="right" style="padding: 0px 15px 0px 0px; margin: 0px; width: 23%; font-size:11px;">PERIOD TO:</td>
+            <td style="padding: 0px; margin: 0px; width: 23%; font-size:11px;">{{ periodTo }}</td>
+        </tr>
+        <tr style="width: 100%; padding: 0px; margin: 0px;">
+            <td style="padding: 0px; margin: 0px; width: 53%; font-size:11px;">Use Column I on Contracts where variable retainage for line items may apply.</td>
+            <td align="right" style="padding: 0px; margin: 0px; width: 1%; font-size:11px;">&nbsp;</td>
+            <td align="right" style="padding: 0px 15px 0px 0px; margin: 0px; width: 23%; font-size:11px;">ARCHITECTS PROJECT NO:</td>
+            <td style="padding: 0px; margin: 0px; width: 23%; font-size:11px;">{{ architectsProjectNumber }}</td>
+        </tr>
+      </table>
+    </div>
+
+      <table border="1px solid black" style="width: 100%;">
+        <tr style="width: 100%;">
+            <td align="center" style="width: 5%; font-size:11px; padding: 0px; margin: 0px; vertical-align: bottom; border-right: 1px solid black; border-bottom: 1px solid black;">A</td>
+            <td align="center" style="width: 20%; font-size:11px; padding: 0px; margin: 0px; vertical-align: bottom; border-right: 1px solid black; border-bottom: 1px solid black;">B</td>
+            <td align="center" style="width: 10%; font-size:11px; padding: 0px; margin: 0px; vertical-align: bottom; border-right: 1px solid black; border-bottom: 1px solid black;">C</td>
+            <td align="center" style="width: 10%; font-size:11px; padding: 0px; margin: 0px; vertical-align: bottom; border-right: 1px solid black; border-bottom: 1px solid black;">D</td>
+            <td align="center" style="width: 10%; font-size:11px; padding: 0px; margin: 0px; vertical-align: bottom; border-right: 1px solid black; border-bottom: 1px solid black;">E</td>
+            <td align="center" style="width: 10%; font-size:11px; padding: 0px; margin: 0px; vertical-align: bottom; border-right: 1px solid black; border-bottom: 1px solid black;">F</td>
+            <td align="right" style="width: 10%; font-size:11px; padding-right: 15px; margin: 0px; vertical-align: bottom; border-bottom: 1px solid black;">G</td>
+            <td align="center" style="width: 5%; font-size:11px; padding: 0px; margin: 0px; vertical-align: bottom; border-right: 1px solid black; border-bottom: 1px solid black;"></td>
+            <td align="center" style="width: 10%; font-size:11px; padding: 0px; margin: 0px; vertical-align: bottom; border-right: 1px solid black; border-bottom: 1px solid black;">H</td>
+            <td align="center" style="width: 11%; font-size:11px; padding: 0px; margin: 0px; vertical-align: bottom; border-bottom: 1px solid black;">I</td>
+        </tr>
+        <tr style="width: 100%;">
+            <td align="center" style="width: 5%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black;">ITEM</td>
+            <td align="center" style="width: 20%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black;">DESCRIPTION OF WORK</td>
+            <td align="center" style="width: 10%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black;">SCHEDULED</td>
+            <td align="center" colspan="2" style="width: 20%; font-size:11px; padding: 0px; margin: 0px; vertical-align: middle; border-right: 1px solid black; border-bottom: 1px solid black;">WORK COMPLETED</td>
+            <td align="center" style="width: 10%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black;">MATERIALS</td>
+            <td align="center" style="width: 10%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black;">TOTAL</td>
+            <td align="center" style="width: 5%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black;">%</td>
+            <td align="center" style="width: 10%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black;">BALANCE</td>
+            <td align="center" style="width: 11%; font-size:11px; padding: 0px; margin: 0px;">RETAINAGE</td>
+        </tr>
+        <tr style="width: 100%;">
+            <td align="center" style="width: 5%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black;">NO.</td>
+            <td align="center" style="width: 20%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black;"></td>
+            <td align="center" style="width: 10%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black;">VALUE</td>
+            <td align="center" style="width: 10%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black;">FROM PREVIOUS</td>
+            <td align="center" style="width: 10%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black;">THIS PERIOD</td>
+            <td align="center" style="width: 10%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black;">PRESENTLY</td>
+            <td align="center" style="width: 10%; font-size:10px; padding: 0px; margin: 0px; border-right: 1px solid black;">COMPLETED AND</td>
+            <td align="center" style="width: 5%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black;">(G / C)</td>
+            <td align="center" style="width: 10%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black;">TO FINISH</td>
+            <td align="center" style="width: 11%; font-size:11px; padding: 0px; margin: 0px;"></td>
+        </tr>
+        <tr style="width: 100%;">
+            <td align="center" style="width: 5%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black;"></td>
+            <td align="center" style="width: 20%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black;"></td>
+            <td align="center" style="width: 10%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black;"></td>
+            <td align="center" style="width: 10%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black;">APPLICATIONS</td>
+            <td align="center" style="width: 10%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black;"></td>
+            <td align="center" style="width: 10%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black;">STORED (NOT</td>
+            <td align="center" style="width: 10%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black;">STORED TO</td>
+            <td align="center" style="width: 5%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black;"></td>
+            <td align="center" style="width: 10%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black;">(C - G)</td>
+            <td align="center" style="width: 11%; font-size:11px; padding: 0px; margin: 0px;"></td>
+        </tr>
+        <tr style="width: 100%;">
+            <td align="center" style="width: 5%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black; border-bottom: 1px solid black;"></td>
+            <td align="center" style="width: 20%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black; border-bottom: 1px solid black;"></td>
+            <td align="center" style="width: 10%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black; border-bottom: 1px solid black;"></td>
+            <td align="center" style="width: 10%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black; border-bottom: 1px solid black;">(D+E)</td>
+            <td align="center" style="width: 10%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black; border-bottom: 1px solid black;"></td>
+            <td align="center" style="width: 10%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black; border-bottom: 1px solid black;">IN D OR E)</td>
+            <td align="center" style="width: 10%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black; border-bottom: 1px solid black;">DATE (D+E+F)</td>
+            <td align="center" style="width: 5%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black; border-bottom: 1px solid black;"></td>
+            <td align="center" style="width: 10%; font-size:11px; padding: 0px; margin: 0px; border-right: 1px solid black; border-bottom: 1px solid black;"></td>
+            <td align="center" style="width: 11%; font-size:11px; padding: 0px; margin: 0px; border-bottom: 1px solid black;"></td>
+        </tr>
+        <!-- ROWS GO HERE -->
+        <tr line-height="200%">
+            <td align="center" style="width: 5%; font-size:11px; padding-top:7px; border-right: 1px solid black;">&nbsp;</td>
+            <td align="center" style="width: 20%; font-size:11px; padding-top:7px; border-right: 1px solid black;">GRAND TOTAL</td>
+            <td align="right" style="width: 10%; font-size:11px; padding-top:7px; border-right: 1px solid black;">{{ totals.scheduledValue }}</td>
+            <td align="right" style="width: 10%; font-size:11px; padding-top:7px; border-right: 1px solid black;">{{ totals.workCompletedFromPreviousApplication }}</td>
+            <td align="right" style="width: 10%; font-size:11px; padding-top:7px; border-right: 1px solid black;">{{ totals.workCompletedThisPeriod }}</td>
+            <td align="right" style="width: 10%; font-size:11px; padding-top:7px; border-right: 1px solid black;">{{ totals.materialsPresentlyStored }}</td>
+            <td align="right" style="width: 10%; font-size:11px; padding-top:7px; border-right: 1px solid black;">{{ totals.totalCompletedAndStoredToDate }}</td>
+            <td align="center" style="width: 5%; font-size:11px; padding-top:7px; border-right: 1px solid black;">{{ totals.percent }}</td>
+            <td align="right" style="width: 10%; font-size:11px; padding-top:7px; border-right: 1px solid black;">{{ totals.balanceToFinish }}</td>
+            <td align="right" style="width: 11%; font-size:11px; padding-top:7px;">{{ totals.retainage }}</td>
+        </tr>
+      </table>
+  </body>
+</pdf>
