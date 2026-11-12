@@ -78,10 +78,12 @@ define(['N/file', 'N/record', 'N/render', 'N/search', 'N/log'],
                     projectId: projectId
                 });
 
-                const fromContractor = [
-                    escapeXml(getValue(subRec, 'name')),
-                    escapeXmlWithBreaks(getValue(subRec, 'mainaddress_text'))
-                ].filter(Boolean).join('<br/>');
+                // const fromContractor = [
+                //     escapeXml(getValue(subRec, 'name')),
+                //     escapeXmlWithBreaks(getValue(subRec, 'mainaddress_text'))
+                // ].filter(Boolean).join('<br/>');
+
+                const fromContractor = escapeXmlWithBreaks(getValue(invoiceRec, 'custbody_mhi_aif_district_addr'))
                 const subscribedText = getText(invoiceRec, 'custbody_bc_aia_subscribed');
                 const subscribedDateParts = getMonthYearParts(subscribedText);
                 const projectAddressHtml = getProjectAddressHtml(projectId, invoiceRec);
