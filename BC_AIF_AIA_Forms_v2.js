@@ -79,7 +79,7 @@ define(['N/file', 'N/record', 'N/render', 'N/search', 'N/log'],
                 });
 
                 const fromContractor = [
-                    escapeXml(getValue(subRec, 'name')),
+                 //   escapeXml(getValue(subRec, 'name')),
                     escapeXmlWithBreaks(getValue(subRec, 'mainaddress_text'))
                 ].filter(Boolean).join('<br/>');
 
