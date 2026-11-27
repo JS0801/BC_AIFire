@@ -5,7 +5,8 @@
 define(['N/file', 'N/record', 'N/render', 'N/search', 'N/log'],
     function (file, record, render, search, log) {
 
-        const TEMPLATE_FILE_ID = 20436;
+        const G702_TEMPLATE_FILE_ID = 32931;
+        const G703_TEMPLATE_FILE_ID = 32932;
         const SAVE_PDF_ACTION = 'save';
         const AIA_PDF_FIELD_ID = 'custbody_bc_g702_g703_group_pdf';
 
@@ -68,8 +69,10 @@ define(['N/file', 'N/record', 'N/render', 'N/search', 'N/log'],
                     periodTo: periodTo
                 });
 
-                const htmlFile = file.load({ id: TEMPLATE_FILE_ID });
-                let html = normalizeTemplateXml(htmlFile.getContents());
+                const templateIds = getAiaTemplateIds();
+                const g702File = file.load({ id: templateIds.g702 });
+                const g703File = file.load({ id: templateIds.g703 });
+                let html = buildAiaTemplateXml(g702File.getContents(), g703File.getContents());
 
                 const searchObj = buildMemoObject({
                     createdFromId: createdFromId,
@@ -175,7 +178,6 @@ define(['N/file', 'N/record', 'N/render', 'N/search', 'N/log'],
                 if (action === SAVE_PDF_ACTION) {
                     const fileId = savePdfAndUpdateInvoice({
                         pdfFile: pdfFile,
-                        templateFile: htmlFile,
                         invoiceRec: invoiceRec,
                         invoiceId: recId,
                         projectName: getText(invoiceRec, 'cseg_bc_project')
@@ -213,6 +215,60 @@ define(['N/file', 'N/record', 'N/render', 'N/search', 'N/log'],
 
                 response.write('An error occurred: ' + (e && e.message ? e.message : safeString(e)));
             }
+        }
+
+        function getAiaTemplateIds() {
+            const results = search.create({
+                type: 'customrecord_bc_global_pref',
+                filters: [['isinactive', 'is', 'F']],
+                columns: [
+                    search.createColumn({ name: 'internalid', sort: search.Sort.ASC }),
+                    search.createColumn({ name: 'custrecord_bc_cust_aia_g702' }),
+                    search.createColumn({ name: 'custrecord_bc_cust_aia_g703_table' })
+                ]
+            }).run().getRange({ start: 0, end: 1 });
+
+            // Use the first active preference (lowest internal ID) consistently.
+            // Fall back independently when a preference or its field is missing.
+            const preference = results && results.length ? results[0] : null;
+            const g702 = preference
+                ? safeString(preference.getValue({ name: 'custrecord_bc_cust_aia_g702' })).trim() : '';
+            const g703 = preference
+                ? safeString(preference.getValue({ name: 'custrecord_bc_cust_aia_g703_table' })).trim() : '';
+            const templateIds = {
+                g702: g702 || G702_TEMPLATE_FILE_ID,
+                g703: g703 || G703_TEMPLATE_FILE_ID
+            };
+
+            log.debug('AIA Template Selection', {
+                preferenceId: preference ? preference.id : '',
+                g702FileId: templateIds.g702,
+                g703FileId: templateIds.g703,
+                g702Fallback: !g702,
+                g703Fallback: !g703
+            });
+            return templateIds;
+        }
+
+        function buildAiaTemplateXml(g702Xml, g703Xml) {
+            // Each standalone template keeps its own head, styles and body settings.
+            // XML declarations and doctypes belong only on the outer PDF set.
+            function prepareTemplate(xml, formName) {
+                const documentXml = normalizeTemplateXml(xml)
+                    .replace(/^\uFEFF/, '')
+                    .replace(/<\?xml\b[^?]*\?>/gi, '')
+                    .replace(/<!DOCTYPE\s+pdf\s+(?:PUBLIC\s+["'][^"']*["']\s+["'][^"']*["']|SYSTEM\s+["'][^"']*["'])\s*>/gi, '')
+                    .trim();
+                if (!/^<pdf(?:\s|>)/i.test(documentXml) || !/<\/pdf>\s*$/i.test(documentXml)) {
+                    throw new Error(formName + ' template must be a standalone XML document with a <pdf> root.');
+                }
+                return documentXml;
+            }
+
+            return '<?xml version="1.0"?>\n' +
+                '<!DOCTYPE pdfset PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">\n' +
+                '<pdfset>\n' + prepareTemplate(g702Xml, 'G702') + '\n' +
+                prepareTemplate(g703Xml, 'G703') + '\n</pdfset>';
         }
 
         function buildContinuationRows(searchObj) {
@@ -611,7 +667,6 @@ define(['N/file', 'N/record', 'N/render', 'N/search', 'N/log'],
         function savePdfAndUpdateInvoice(options) {
             const invoiceId = options.invoiceId;
             const pdfFile = options.pdfFile;
-            const templateFile = options.templateFile;
             const fileName = buildAiaPdfFileName(options.projectName, invoiceId);
 
             pdfFile.name = fileName;
