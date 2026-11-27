@@ -89,7 +89,7 @@
   </head>
 
   <body padding="0.25in 0.25in 0.25in 0.25in" size="Letter-LANDSCAPE">
-    <!-- Application and 1 Certificate for Payment -->
+    <!-- Application and Certificate for Payment -->
         <div style="font-size: 9px;">
             <table>
                 <tr>
@@ -97,7 +97,7 @@
                         <#if .locale=="fr_CA">
                             Demande et Certificat de Paiement
                         <#else>
-                            Application and Certificate for Payment
+                            Application and 1 Certificate for Payment
                         </#if>
                     </i></b></td>
                 </tr>
